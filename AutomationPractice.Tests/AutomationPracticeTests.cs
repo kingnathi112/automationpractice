@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using AutomationPractice.Tests.Helpers;
+using AutomationPractice.Tests.Testdata;
 using NUnit.Framework;
 
 namespace AutomationPractice.Tests;
@@ -38,6 +39,16 @@ public class AutomationPracticeTests : BaseTest
             Assert.IsTrue(await _homePage.IsSearchedItemShown(search.ItemName));
         }
     }
+    
+    [Test]
+    public async Task SignIn_LoginWithValidCredentials()
+    {
+        await _homePage.ClickSignIn();
+        Assert.IsTrue(await _accountPage.IsAuthenticationHeaderVisible());
+        await _accountPage.SignInUsingEmailAndPassword(UserDetails.Username, UserDetails.Password);
+        Assert.AreEqual(UserDetails.FullName,await _accountPage.IsCustomerNameVisible());
+    }
+
     public AutomationPracticeTests(Browsers browser) : base(browser)
     {
     }

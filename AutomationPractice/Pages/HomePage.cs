@@ -27,9 +27,9 @@ public class HomePage
 
     public async Task Search(string item)
     {
-        await Map.SearchQueryTxt.WaitForAsync(_waitForVisible);
-        await Map.SearchQueryTxt.FillAsync("");
-        await Map.SearchQueryTxt.FillAsync(item);
+        await Map.SearchQueryInput.WaitForAsync(_waitForVisible);
+        await Map.SearchQueryInput.FillAsync("");
+        await Map.SearchQueryInput.FillAsync(item);
 
         await Map.SearchBtn.WaitForAsync(_waitForVisible);
         await Map.SearchBtn.ClickAsync();
@@ -39,6 +39,12 @@ public class HomePage
     {
         await Map.SearchResultTxt(item).WaitForAsync(_waitForVisible);
         return await Map.SearchResultTxt(item).IsVisibleAsync();
+    }
+
+    public async Task ClickSignIn()
+    {
+        await Map.LoginLink.WaitForAsync(_waitForVisible);
+        await Map.LoginLink.ClickAsync();
     }
     
 }
@@ -51,7 +57,8 @@ public class HomePageMap
         _page = page;
     }
 
-    public ILocator SearchQueryTxt => _page.Locator("#search_query_top");
+    public ILocator SearchQueryInput => _page.Locator("#search_query_top");
     public ILocator SearchResultTxt(string searchItem) => _page.Locator($"//img[@title='{searchItem}']");
     public ILocator SearchBtn => _page.Locator("//button[@name='submit_search']");
+    public ILocator LoginLink => _page.Locator(".login");
 }
