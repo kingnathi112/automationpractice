@@ -69,6 +69,19 @@ public class AutomationPracticeTests : BaseTest
         var subtotal = unitProductPrice * quantity;
         Assert.AreEqual(subtotal,await _moreProductDetailsPage.GetSubtotalPrice());
     }
+
+    [Test]
+    public async Task Hover_HoverWomenAndDressesCategoryAndSubMenuMustBeVisibleAndThenClickOnBlouses()
+    {
+        await _homePage.HoverWomenCategory();
+        Assert.IsTrue(await _homePage.IsWomenCategoryHovered());
+        
+        await _homePage.HoverDressesCategory();
+        Assert.IsTrue(await _homePage.IsDressesCategoryHovered());
+
+        await _homePage.ClickOnBlousesUnderWomenCategory();
+        Assert.AreEqual("Blouses", await _homePage.NavigatedHeader());
+    }
     public AutomationPracticeTests(Browsers browser) : base(browser)
     {
     }

@@ -52,7 +52,42 @@ public class HomePage
         await Map.MoreDetailsBtn.WaitForAsync(_waitForVisible);
         await Map.MoreDetailsBtn.ClickAsync();
     }
+
+    public async Task HoverWomenCategory()
+    {
+        await Map.WomenCategory.WaitForAsync(_waitForVisible);
+        await Map.WomenCategory.HoverAsync();
+    }
+    public async Task<bool?> IsWomenCategoryHovered()
+    {
+        await Map.CategoryHovered.First.WaitForAsync(_waitForVisible);
+        return await Map.CategoryHovered.First.IsVisibleAsync();
+    }
     
+    public async Task HoverDressesCategory()
+    {
+        await Map.DressesCategory.WaitForAsync(_waitForVisible);
+        await Map.DressesCategory.HoverAsync();
+    }
+    public async Task<bool?> IsDressesCategoryHovered()
+    {
+        await Map.CategoryHovered.Last.WaitForAsync(_waitForVisible);
+        return await Map.CategoryHovered.Last.IsVisibleAsync();
+    }
+
+    public async Task ClickOnBlousesUnderWomenCategory()
+    {
+        await HoverWomenCategory();
+        await Map.BlousesSubCategory.WaitForAsync(_waitForVisible);
+        await Map.BlousesSubCategory.ClickAsync();
+    }
+
+    public async Task<string?> NavigatedHeader()
+    {
+        await Map.NavigatedPageHeader.WaitForAsync(_waitForVisible);
+        var header = await Map.NavigatedPageHeader.TextContentAsync();
+        return header?.Trim();
+    }
 }
 public class HomePageMap
 {
@@ -67,4 +102,10 @@ public class HomePageMap
     public ILocator SearchBtn => _page.Locator("//button[@name='submit_search']");
     public ILocator LoginLink => _page.Locator(".login");
     public ILocator MoreDetailsBtn => _page.Locator("//a[@title='View']");
+    public ILocator WomenCategory => _page.Locator("//a[@title='Women']");
+    public ILocator DressesCategory => _page.Locator("//*[@id=\"block_top_menu\"]/ul/li[2]/a");
+    public ILocator TShirtsCategory => _page.Locator("//a[@title='T-shirts']");
+    public ILocator CategoryHovered => _page.Locator(".submenu-container.clearfix.first-in-line-xs");
+    public ILocator BlousesSubCategory => _page.Locator("//a[@title='Blouses']");
+    public ILocator NavigatedPageHeader => _page.Locator(".cat-name");
 }
