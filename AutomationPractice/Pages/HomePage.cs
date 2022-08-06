@@ -47,11 +47,16 @@ public class HomePage
         await Map.LoginLink.ClickAsync();
     }
     
+    public async Task ClickMoreDetails()
+    {
+        await Map.MoreDetailsBtn.WaitForAsync(_waitForVisible);
+        await Map.MoreDetailsBtn.ClickAsync();
+    }
+    
 }
 public class HomePageMap
 {
     private IPage _page;
-
     public HomePageMap(IPage page)
     {
         _page = page;
@@ -61,4 +66,5 @@ public class HomePageMap
     public ILocator SearchResultTxt(string searchItem) => _page.Locator($"//img[@title='{searchItem}']");
     public ILocator SearchBtn => _page.Locator("//button[@name='submit_search']");
     public ILocator LoginLink => _page.Locator(".login");
+    public ILocator MoreDetailsBtn => _page.Locator("//a[@title='View']");
 }

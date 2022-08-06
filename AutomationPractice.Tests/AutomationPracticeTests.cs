@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutomationPractice.Tests.Helpers;
 using AutomationPractice.Tests.Testdata;
@@ -49,6 +51,24 @@ public class AutomationPracticeTests : BaseTest
         Assert.AreEqual(UserDetails.FullName,await _accountPage.IsCustomerNameVisible());
     }
 
+    [Test]
+    public async Task AddToCart_VerifyDisplayedTotalMatchesCalculatedTotal()
+    {
+        await SignIn_LoginWithValidCredentials();
+        await Search_SingleSearch_VerifyIfResultsHasProduct();
+
+        await _homePage.ClickMoreDetails();
+        var unitProductPrice = await _moreProductDetailsPage.ProductPriceDouble();
+        var quantity = 4;
+        Assert.IsTrue(await _moreProductDetailsPage.IsAddedProductVisible());
+
+        await _moreProductDetailsPage.AddItemWithDesiredQuantityToCart(quantity);
+        Assert.IsTrue(await _moreProductDetailsPage.IsRecentlyAddedProductVisible());
+        Assert.AreEqual(quantity.ToString(),await _moreProductDetailsPage.Quantity());
+
+        var subtotal = unitProductPrice * quantity;
+        Assert.AreEqual(subtotal,await _moreProductDetailsPage.GetSubtotalPrice());
+    }
     public AutomationPracticeTests(Browsers browser) : base(browser)
     {
     }

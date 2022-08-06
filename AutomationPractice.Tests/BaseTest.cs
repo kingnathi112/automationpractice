@@ -12,6 +12,7 @@ public abstract class BaseTest
     Browsers _browser;
     protected HomePage _homePage;
     protected MyAccountPage _accountPage;
+    protected MoreProductDetailsPage _moreProductDetailsPage;
     
     protected BaseTest(Browsers browser)
     {
@@ -24,6 +25,7 @@ public abstract class BaseTest
         _driver = await DriverFactory.Build(_browser);
         _homePage = new HomePage(_driver);
         _accountPage = new MyAccountPage(_driver);
+        _moreProductDetailsPage = new MoreProductDetailsPage(_driver);
     }
     
     [SetUp]
