@@ -18,4 +18,9 @@
       <ProjectReference Include="..\AutomationPractice\AutomationPractice.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Testdata\testdata.json" />
+      <EmbeddedResource Include="Testdata\testdata.json" />
+    </ItemGroup>
+
 </Project>
